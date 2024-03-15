@@ -1,0 +1,87 @@
+paths:
+  /api/ecobici-information:
+    get:
+      summary: Obtiene información de las estaciones
+      tags:
+        - Stations
+      responses:
+        "200":
+          description: Información de las estaciones obtenida satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  last_updated:
+                    type: integer
+                    description: Marca de tiempo del último estado actualizado
+                  ttl:
+                    type: integer
+                    description: Tiempo de vida del estado en segundos
+                  data:
+                    type: object
+                    properties:
+                      stations:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Station"
+        "500":
+          description: Error del servidor. Error al obtener la información de las estaciones
+
+components:
+  schemas:
+    Station:
+      type: object
+      properties:
+        station_id:
+          type: string
+          description: ID de la estación
+        name:
+          type: string
+          description: Nombre de la estación
+        physical_configuration:
+          type: string
+          description: Configuración física de la estación
+        lat:
+          type: number
+          description: Latitud de la estación
+        lon:
+          type: number
+          description: Longitud de la estación
+        altitude:
+          type: number
+          description: Altitud de la estación
+        address:
+          type: string
+          description: Dirección de la estación
+        post_code:
+          type: string
+          description: Código postal de la estación
+        capacity:
+          type: integer
+          description: Capacidad de la estación
+        is_charging_station:
+          type: boolean
+          description: Indica si la estación es una estación de carga
+        rental_methods:
+          type: array
+          items:
+            type: string
+          description: Métodos de alquiler disponibles en la estación
+        groups:
+          type: array
+          items:
+            type: string
+          description: Grupos a los que pertenece la estación
+        obcn:
+          type: string
+          description: Código de OBCN (si aplicable)
+        nearby_distance:
+          type: number
+          description: Distancia cercana (en metros) a la estación
+        _ride_code_support:
+          type: boolean
+          description: Indica si se admite el código de viaje
+        rental_uris:
+          type: object
+          description: URIs de alquiler (si aplicable)

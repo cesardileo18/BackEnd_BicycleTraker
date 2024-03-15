@@ -1,0 +1,80 @@
+paths:
+  /api/ecobici-status:
+    get:
+      summary: Obtiene el estado de las estaciones
+      tags:
+        - Stations
+      responses:
+        "200":
+          description: Estado de las estaciones obtenido satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  last_updated:
+                    type: integer
+                    description: Marca de tiempo del último estado actualizado
+                  ttl:
+                    type: integer
+                    description: Tiempo de vida del estado en segundos
+                  data:
+                    type: object
+                    properties:
+                      stations:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Station"
+        "500":
+          description: Error del servidor. Error al obtener el estado de las estaciones
+
+components:
+  schemas:
+    Station:
+      type: object
+      properties:
+        station_id:
+          type: string
+          description: ID de la estación
+        num_bikes_available:
+          type: integer
+          description: Número de bicicletas disponibles
+        num_bikes_available_types:
+          type: object
+          properties:
+            mechanical:
+              type: integer
+              description: Número de bicicletas mecánicas disponibles
+            ebike:
+              type: integer
+              description: Número de bicicletas eléctricas disponibles
+        num_bikes_disabled:
+          type: integer
+          description: Número de bicicletas deshabilitadas
+        num_docks_available:
+          type: integer
+          description: Número de muelles disponibles
+        num_docks_disabled:
+          type: integer
+          description: Número de muelles deshabilitados
+        last_reported:
+          type: integer
+          description: Marca de tiempo del último informe
+        is_charging_station:
+          type: boolean
+          description: Indica si la estación es una estación de carga
+        status:
+          type: string
+          description: Estado de la estación
+        is_installed:
+          type: integer
+          description: Indica si la estación está instalada
+        is_renting:
+          type: integer
+          description: Indica si la estación está alquilando bicicletas
+        is_returning:
+          type: integer
+          description: Indica si la estación está recibiendo bicicletas
+        traffic:
+          type: object
+          description: Datos de tráfico (si aplicable)
